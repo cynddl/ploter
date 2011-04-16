@@ -99,6 +99,11 @@ Dajax = new Dajax();
     data = $('form').serialize(true);
     Dajaxice.web.test(Dajax.process, {'form':data});
   }
+
+  function upload_plot(){
+    data  = $('form').serialize(true);
+    Dajaxice.web.upload(Dajax.process, {'form':data});
+  }
 </script>
 </head>
 <body>
@@ -117,6 +122,7 @@ Dajax = new Dajax();
           </p>
           {% endfor %}
           <p><input type="button" value="Process" onClick="send_form();"/></p>
+          <p><input type="button" value="Upload" onClick="upload_plot();"/></p>
         </fieldset>
       </form>
     </div>

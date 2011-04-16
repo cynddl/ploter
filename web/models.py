@@ -1,8 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 
-from django import forms
-from django.forms import ModelForm,Textarea,Select
+from django.forms import ModelForm,Textarea
 
 from plot2disk.models import PlotModel
 

@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 import tempfile
 import Gnuplot
-import array
 
 from django.conf import settings
 
@@ -14,7 +12,7 @@ class Plot:
 
   def to_disk(self):
     c = self.plot_conf
-    g = Gnuplot.Gnuplot(debug=1)
+    g = Gnuplot.Gnuplot(debug=0)
     g('set terminal unknow')
     # ajout de titre
     g.title(c['title'])
