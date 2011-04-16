@@ -1,0 +1,11 @@
+/*************************************
+   WELCOME TO THE CUSTOM STYLESHEET
+--------------------------------------
+    Put your custom styles in here.
+/**************************************/
+
+.error-field {
+  background: #FBE3E4 !important;
+  color: #8A1F11;
+  border-color: #FBC2C4;
+}

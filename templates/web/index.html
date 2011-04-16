@@ -1,0 +1,128 @@
+{% load dajaxice_templatetags %}
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />  
+    {% dajaxice_js_import %}
+    <title>plot.er - web graph enlightened</title>
+    <link rel="stylesheet" href="/static/css/blue-fluid-trip/screen.css" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="/static/css/blue-fluid-trip/mobile.css" type="text/css" media="handheld, only screen and (max-width: 767px)" />
+    <link rel="stylesheet" href="/static/css/blue-fluid-trip/print.css" type="text/css" media="print" />
+    <!--[if IE]>
+    <link rel="stylesheet" href="/static/css/blue-fluid-trip/ie.css" type="text/css" media="screen, projection" />
+    <![endif]-->
+    <link rel="stylesheet" href="/static/css/blue-fluid-trip/style.css" type="text/css" media="screen, projection" />
+    <script src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" charset="utf-8">
+      google.load("jquery", "1.5.2");
+      </script>
+      <script language="javascript" type="text/javascript">
+        $j = jQuery.noConflict();
+        </script>
+        <script language="javascript" type="text/javascript">
+          google.load("prototype", "1.7.0.0");
+          </script>
+
+          <script type="text/javascript" charset="utf-8">
+            /* Copyright (c) 2009-2010, Benito Jorge Bastida :: For further information check COPYING */
+          var Dajax = Class.create();
+          Dajax.prototype = {
+initialize: function(){},
+            process: function(data)
+            {
+              if(data==Dajaxice.EXCEPTION){
+                alert('Something went wrong, please reload the page.');
+              }
+              else{
+                data.each(function(elem){
+                    switch(elem.cmd)
+                    {
+                    case 'alert':
+                    alert(elem.val)
+                    break;
+
+                    case 'data':
+                    eval( elem.fun+"(elem.val);" );
+                    break;
+
+                    case 'as':
+                    $$(elem.id).each(function(e){e[elem.prop] = elem.val;});
+                    break;
+
+                    case 'addcc':
+                    elem.val.each(function(cssclass){
+                      $$(elem.id).each(function(e){ e.addClassName(cssclass);});
+                      });
+                    break;
+
+                    case 'remcc':
+                    elem.val.each(function(cssclass){
+                        $$(elem.id).each(function(e){ e.removeClassName(cssclass);});
+                        });
+                    break;
+
+                    case 'ap':
+                    $$(elem.id).each(function(e){ e[elem.prop] += elem.val;});
+                    break;
+
+                    case 'pp':
+                    $$(elem.id).each(function(e){ e[elem.prop] = elem.val + e[elem.prop];});
+                    break;
+
+                    case 'clr':
+                    $$(elem.id).each(function(e){e[elem.prop] = "";});
+                    break;
+
+                    case 'red':
+                    window.setTimeout('window.location="'+elem.url+'";',elem.delay);
+                    break;
+
+                    case 'js':
+                    eval(elem.val);
+                    break;
+
+                    case 'rm':
+                    $$(elem.id).each(function(e){e.remove();});
+                    break;
+
+                    default:
+                    alert('Unknown action!');
+                    }
+                });
+              }
+            }
+          };
+
+Dajax = new Dajax();
+</script>
+<script type="text/javascript">
+  function send_form(){
+    data = $('form').serialize(true);
+    Dajaxice.web.test(Dajax.process, {'form':data});
+  }
+</script>
+</head>
+<body>
+  <div class="container">
+    <div id="header" class="span-12 last">
+      <h1>Plot.er</h1>
+      <p>Online tool to plot data, using gnuplot as backend. If you do want to contact me, try on <a href="http://fr.wikipedia.org/wiki/Utilisateur:Cynddl">Wikipedia</a></p>
+    </div>
+    <hr />
+    <div id="user" class="span-5">
+      <form id="form" action="javascript:send_form();">{% csrf_token %}
+        <fieldset>
+          {% for field in form %}
+          <p>
+          {{ field.label_tag }}<br/>{{ field }}
+          </p>
+          {% endfor %}
+          <p><input type="button" value="Process" onClick="send_form();"/></p>
+        </fieldset>
+      </form>
+    </div>
+    <div id="plot" class="span-7 last">
+      <img id="image" src="/static/default.png"/>
+    </div>
+  </div>
+</body>
+</html>
