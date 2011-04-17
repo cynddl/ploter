@@ -20,7 +20,6 @@ def deploy():
   put('/tmp/my_project.tgz', '/tmp/')
   with cd('/srv/plot_er'):
     run('tar xzf /tmp/my_project.tgz')
-    run('touch app.wsgi')
     run('chmod 777 static/plot/')
 
 def all():

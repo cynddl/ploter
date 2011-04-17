@@ -4,6 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
+DAJAXICE_NOTIFY_EXCEPTIONS = True
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -78,6 +79,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'sentry.client.middleware.Sentry404CatchMiddleware',
 )
 
 
@@ -93,11 +95,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    #'staticfiles',
     'django.contrib.admin',
-    'django.contrib.admindocs',
     'dajaxice',
     'dajax',
     'plot2disk',
     'web',
+
+    'indexer',
+    'paging',
+    'sentry',
+    'sentry.client',
+    'sentry.plugins.sentry_urls',
 )
