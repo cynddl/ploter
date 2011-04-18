@@ -1,7 +1,7 @@
 from plot2disk.views import Plot
 from web.models import PlotForm
 
-from plot_er import settings
+from django.conf import settings
 
 from dajax.core import Dajax
 from dajaxice.core import dajaxice_functions
@@ -29,7 +29,7 @@ def upload(request, form):
     dajax.remove_css_class('#form input,select','error-field')
     my_plot = Plot(form.cleaned_data)
     filename = my_plot.to_disk()
-    url = commands.getoutput("uimge --ig %s" % settings.PROJECT_PATH + filename)
+    url = commands.getoutput(settings.UIMGE_PATH + " --ig " + settings.PROJECT_PATH + filename)
     dajax.assign('#image', 'src', url)
   else:
     dajax.remove_css_class('#form input,select','error-field')

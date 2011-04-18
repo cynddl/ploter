@@ -2,7 +2,8 @@ from __future__ import with_statement
 from fabric.api import *
 from fabric.contrib.console import confirm
 
-env.hosts = ['cynddl@halfr.homedns.org:22']
+#env.hosts = ['cynddl@halfr.homedns.org:22']
+env.hosts = ['ploter@ssh.alwaysdata.com:22']
 
 def test():
   local('./manage.py test plot2disk', capture=False)
@@ -18,7 +19,8 @@ def prepare_deploy():
 
 def deploy():
   put('/tmp/my_project.tgz', '/tmp/')
-  with cd('/srv/plot_er'):
+  with cd('/home/ploter/ploter_prod'):
+  #with cd('/srv/plot_er'):
     run('tar xzf /tmp/my_project.tgz')
     run('chmod 777 static/plot/')
 

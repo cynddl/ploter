@@ -1,6 +1,11 @@
 import os
 
 DEBUG = True
+
+
+#prod: HOST = 'alwaysdata'
+HOST = 'local'
+
 TEMPLATE_DEBUG = DEBUG
 
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
@@ -14,6 +19,11 @@ MANAGERS = ADMINS
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_PATH  = os.path.join(PROJECT_PATH, 'static')
 STATIC_URL = '/static/'
+
+if HOST == 'alwaysdata':
+  UIMGE_PATH = '/home/ploter/uimge/uimgercli.py'
+else:
+  UIMGE_PATH = 'uimge'
 
 DATABASES = {
     'default': {
