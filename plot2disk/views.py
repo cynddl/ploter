@@ -11,6 +11,9 @@ class Plot:
     self.plot_conf = plot_conf
 
   def to_disk(self):
+    # TODO: trouver un moyen joli pour spécifier, pour chaque format de sortie,
+    # une extension et des options sympa
+    # (ex. 'postscript' -> extension : '.ps', options : enhanced=1,color=1)
     c = self.plot_conf
     g = Gnuplot.Gnuplot(debug=0)
     g('set terminal unknow')
@@ -24,7 +27,7 @@ class Plot:
     # creation du graphe
     g.plot(Gnuplot.Data(data,with_=c['style'].encode()))
     # création d'un fichier temporaire
-    temp = tempfile.NamedTemporaryFile(suffix='.png',dir=settings.STATIC_PATH+'/plot/', delete=False)
+    temp = tempfile.NamedTemporaryFile(suffix='.'+c['out_format'], dir=settings.STATIC_PATH+'/plot/', delete=False)
     # copie du graphe dans le fichier
-    g.hardcopy(temp.name, terminal='png')
+    g.hardcopy(temp.name, terminal=c['out_format'])
     return settings.STATIC_URL+'plot/' + temp.name[temp.name.rfind("/")+1:]
