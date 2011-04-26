@@ -92,8 +92,10 @@ MIDDLEWARE_CLASSES = (
     'sentry.client.middleware.Sentry404CatchMiddleware',
 )
 
-
-ROOT_URLCONF = 'plot_er.urls'
+if HOST == 'alwaysdata':
+  ROOT_URLCONF = 'ploter_prod.urls'
+else:
+  ROOT_URLCONF = 'plot_er.urls'
 
 TEMPLATE_DIRS = (
     PROJECT_PATH+"/templates/"

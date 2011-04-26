@@ -6,7 +6,8 @@ from django.conf import settings
 from dajax.core import Dajax
 from dajaxice.core import dajaxice_functions
 
-import commands
+from subprocess import Popen, PIPE, STDOUT
+
 
 def test(request, form):
   form = PlotForm(form)
@@ -29,7 +30,11 @@ def upload(request, form):
     dajax.remove_css_class('#form input,select','error-field')
     my_plot = Plot(form.cleaned_data)
     filename = my_plot.to_disk()
-    url = commands.getoutput(settings.UIMGE_PATH + " --ig " + settings.PROJECT_PATH + filename)
+    command = settings.UIMGE_PATH
+    arguments = " --ig " + settings.PROJECT_PATH + filename
+    p = Popen(args = [command + arguments], stdout=PIPE, stderr=STDOUT, shell=True)
+    url = p.stdout.readlines()
+    p.wait()
     dajax.assign('#image', 'src', url)
   else:
     dajax.remove_css_class('#form input,select','error-field')

@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from plot_er import settings
+from django.conf import settings
 
 from django.contrib import admin
 admin.autodiscover()

@@ -5,12 +5,16 @@ from fabric.contrib.console import confirm
 #env.hosts = ['cynddl@halfr.homedns.org:22']
 env.hosts = ['ploter@ssh.alwaysdata.com:22']
 
+def clear():
+  local('rm *.pyc')
+  local('rm */*.pyc')
+  local('rm static/plot/*')
+
 def test():
   local('./manage.py test plot2disk', capture=False)
   local('./manage.py test web', capture=False)
 
 def pack():
-  local('rm static/plot/*')
   local('tar czf /tmp/my_project.tgz .', capture=False)
 
 def prepare_deploy():
